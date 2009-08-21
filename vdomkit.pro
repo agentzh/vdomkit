@@ -17,6 +17,7 @@ isEmpty(FCGI_DIR) {
 } else {
     INCLUDEPATH = $$FCGI_DIR/include $$INCLUDEPATH
     QMAKE_LIBDIR_FLAGS += -L$$FCGI_DIR/lib
+    QMAKE_RPATHDIR += $$FCGI_DIR/lib
 }
 
 INCLUDEPATH += $$QTDIR/include/QtWebKit
@@ -32,7 +33,7 @@ macx:QT+=xml network
 #LIBS += -L$$OUT_DIR/lib
 #QMAKE_RPATHDIR = $$OUTPUT_DIR/lib $$QMAKE_RPATHDIR
 
-QMAKE_RPATHDIR = $$QMAKE_RPATHDIR
+QMAKE_RPATHDIR += $$QMAKE_RPATHDIR
 target.path = $$OUTPUT_DIR/bin
 INSTALLS += target
 

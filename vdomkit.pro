@@ -1,6 +1,6 @@
 TEMPLATE = app
 #DEFINES += ENABLE_TIMER
-#DEFINES += ENABLE_FASTCGI
+DEFINES += ENABLE_FASTCGI
 LIBS += -lfcgi
 QT+=xml network webkit
 

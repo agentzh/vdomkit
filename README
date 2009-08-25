@@ -1,0 +1,75 @@
+This project provides a command-line utility as well as a FastCGI server
+for the vdomwebkit engine, a patched version of QtWebKit with VDOM dumper
+injected:
+
+  http://github.com/agentzh/vdomwebkit/tree/master
+
+Installation
+
+  export WEBKITDIR=
+  export QTDIR=/path/to/qt
+  qmake 'CONFIG-=debug' \
+     'CONFIG+=release' OUTPUT_DIR=/path/to/install/vdomkit \
+     FCGI_DIR=/path/to/libfcgi -r
+  make
+  make install
+
+If you have fcgi ( http://www.fastcgi.com/dist/ ) installed
+directly into your system, then FCGI_DIR is not required to
+set explicitly.
+
+The OUTPUT_DIR variable is always required to specify
+explictly. If you want to install to your system directly,
+set OUTPUT_DIR=/usr/local
+
+Usage
+
+* Command-line interface
+
+  $ vdomkit 'http://www.google.com'
+
+  $ vdomkit --viewport-size=947x843 \
+        --user-agent='vdomkit crawler' \
+        --timeout=15 \
+        --proxy=foo.bar.com:3128 \
+        'http://www.yahoo.cn'
+
+* Web interface
+
+  Use the following command to start vdomkit as a FastCGI
+  backend server:
+
+    exec vdomkit --fastcgi
+
+  Sample Apache2 mod_fcgid configration:
+
+    LoadModule deflate_module modules/mod_deflate.so
+    DocumentRoot "/opt/vdomkit/fastcgi"
+    MaxProcessCount 50
+    BusyTimeout 30
+    MaxClients 100
+    MaxRequestsPerChild 10000
+    KeepAlive Off
+
+    <Location /vdom>
+        Options ExecCGI FollowSymLinks
+        SetOutputFilter DEFLATE
+        SetHandler fcgid-script
+        Allow from all
+    </Location>
+
+ where the "vdom" sh script might look like this:
+
+    #!/bin/sh
+    exec /opt/vdomkit/bin/vdomkit --fastcgi --timeout=10 \
+        --viewport-size=947x843 --user-agent='vdomkit server' \
+        --proxy=foo.com:3128
+
+By default, vdomkit disables Javascript and images in the web
+page. To enable them, specify the corresponding command-line
+options:
+
+    vdomkit --enable-js --auto-load-images
+
+See vdomkit --help for more options.
+

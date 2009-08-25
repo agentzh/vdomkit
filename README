@@ -6,8 +6,11 @@ injected:
 
 Installation
 
+You need to install the Qt patched by the vdomwebkit project
+(See http://github.com/agentzh/vdomwebkit )
+
   export WEBKITDIR=
-  export QTDIR=/path/to/qt
+  export QTDIR=/path/to/vdomwebkit/qt
   qmake 'CONFIG-=debug' \
      'CONFIG+=release' OUTPUT_DIR=/path/to/install/vdomkit \
      FCGI_DIR=/path/to/libfcgi -r

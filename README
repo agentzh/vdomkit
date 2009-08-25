@@ -6,8 +6,8 @@ injected:
 
 Installation
 
-You need to install the Qt patched by the vdomwebkit project
-(See http://github.com/agentzh/vdomwebkit )
+First you need to install the Qt patched by the vdomwebkit
+project. (See http://github.com/agentzh/vdomwebkit for details.)
 
   export WEBKITDIR=
   export QTDIR=/path/to/vdomwebkit/qt
